@@ -88,6 +88,13 @@ def dashboard(request):
                     is_active=True
                 ).order_by('-assigned_date')[:5]
                 
+                # Get upcoming exams
+                from examination.models import Examination
+                upcoming_exams = Examination.objects.filter(
+                    class_for=enrollment.class_enrolled,
+                    exam_date__gte=django_timezone.now().date()
+                ).select_related('subject', 'exam_type').order_by('exam_date', 'start_time')[:5]
+                
                 # Get attendance summary
                 attendance_records = AttendanceRecord.objects.filter(
                     student=student_profile
@@ -99,6 +106,7 @@ def dashboard(request):
             else:
                 current_subjects = []
                 recent_assignments = []
+                upcoming_exams = []
                 attendance_percentage = 0
                 total_sessions = 0
                 present_sessions = 0
@@ -142,6 +150,7 @@ def dashboard(request):
                 'all_enrollments': all_enrollments,
                 'current_subjects': current_subjects,
                 'recent_assignments': recent_assignments,
+                'upcoming_exams': upcoming_exams,
                 'attendance_percentage': round(attendance_percentage, 2),
                 'total_sessions': total_sessions,
                 'present_sessions': present_sessions,
@@ -157,6 +166,7 @@ def dashboard(request):
                 'all_enrollments': [],
                 'current_subjects': [],
                 'recent_assignments': [],
+                'upcoming_exams': [],
                 'attendance_percentage': 0,
                 'total_sessions': 0,
                 'present_sessions': 0,

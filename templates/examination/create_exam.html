@@ -24,136 +24,114 @@
                 <form method="post" id="examForm">
                     {% csrf_token %}
                     
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Please correct the following errors:</strong>
+                        <ul class="mb-0">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
                     <!-- Basic Information -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="examName" class="form-label">Exam Name *</label>
-                            <input type="text" class="form-control" id="examName" name="exam_name" required>
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Exam Name *</label>
+                            {{ form.name }}
+                            {% if form.name.help_text %}
+                            <small class="form-text text-muted">{{ form.name.help_text }}</small>
+                            {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="examType" class="form-label">Exam Type *</label>
-                            <select class="form-select" id="examType" name="exam_type" required>
-                                <option value="">Select Type</option>
-                                <option value="midterm">Mid-term Exam</option>
-                                <option value="final">Final Exam</option>
-                                <option value="quiz">Quiz</option>
-                                <option value="assignment">Assignment</option>
-                                <option value="practical">Practical Exam</option>
-                            </select>
+                            <label for="{{ form.exam_type.id_for_label }}" class="form-label">Exam Type *</label>
+                            {{ form.exam_type }}
+                            {% if form.exam_type.help_text %}
+                            <small class="form-text text-muted">{{ form.exam_type.help_text }}</small>
+                            {% endif %}
                         </div>
                     </div>
                     
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="subject" class="form-label">Subject *</label>
-                            <select class="form-select" id="subject" name="subject" required>
-                                <option value="">Select Subject</option>
-                                <option value="database">Database Systems</option>
-                                <option value="web-dev">Web Development</option>
-                                <option value="software-eng">Software Engineering</option>
-                                <option value="networks">Computer Networks</option>
-                                <option value="os">Operating Systems</option>
-                            </select>
+                            <label for="{{ form.subject.id_for_label }}" class="form-label">Subject *</label>
+                            {{ form.subject }}
+                            {% if form.subject.help_text %}
+                            <small class="form-text text-muted">{{ form.subject.help_text }}</small>
+                            {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="class" class="form-label">Class *</label>
-                            <select class="form-select" id="class" name="class" required>
-                                <option value="">Select Class</option>
-                                <option value="cs-6a">CS-6A</option>
-                                <option value="cs-5b">CS-5B</option>
-                                <option value="cs-7a">CS-7A</option>
-                            </select>
+                            <label for="{{ form.class_for.id_for_label }}" class="form-label">Class *</label>
+                            {{ form.class_for }}
+                            {% if form.class_for.help_text %}
+                            <small class="form-text text-muted">{{ form.class_for.help_text }}</small>
+                            {% endif %}
                         </div>
                     </div>
                     
                     <!-- Date and Time -->
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label for="examDate" class="form-label">Exam Date *</label>
-                            <input type="date" class="form-control" id="examDate" name="exam_date" required>
+                            <label for="{{ form.exam_date.id_for_label }}" class="form-label">Exam Date *</label>
+                            {{ form.exam_date }}
+                            {% if form.exam_date.help_text %}
+                            <small class="form-text text-muted">{{ form.exam_date.help_text }}</small>
+                            {% endif %}
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="startTime" class="form-label">Start Time *</label>
-                            <input type="time" class="form-control" id="startTime" name="start_time" required>
+                            <label for="{{ form.start_time.id_for_label }}" class="form-label">Start Time *</label>
+                            {{ form.start_time }}
+                            {% if form.start_time.help_text %}
+                            <small class="form-text text-muted">{{ form.start_time.help_text }}</small>
+                            {% endif %}
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="endTime" class="form-label">End Time *</label>
-                            <input type="time" class="form-control" id="endTime" name="end_time" required>
+                            <label for="{{ form.end_time.id_for_label }}" class="form-label">End Time *</label>
+                            {{ form.end_time }}
+                            {% if form.end_time.help_text %}
+                            <small class="form-text text-muted">{{ form.end_time.help_text }}</small>
+                            {% endif %}
                         </div>
                     </div>
                     
-                    <!-- Marks and Venue -->
+                    <!-- Marks -->
                     <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label for="totalMarks" class="form-label">Total Marks *</label>
-                            <input type="number" class="form-control" id="totalMarks" name="total_marks" min="1" required>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.total_marks.id_for_label }}" class="form-label">Total Marks *</label>
+                            {{ form.total_marks }}
+                            {% if form.total_marks.help_text %}
+                            <small class="form-text text-muted">{{ form.total_marks.help_text }}</small>
+                            {% endif %}
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="passingMarks" class="form-label">Passing Marks *</label>
-                            <input type="number" class="form-control" id="passingMarks" name="passing_marks" min="1" required>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="venue" class="form-label">Venue</label>
-                            <input type="text" class="form-control" id="venue" name="venue" placeholder="e.g., Room 201">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.passing_marks.id_for_label }}" class="form-label">Passing Marks *</label>
+                            {{ form.passing_marks }}
+                            <small class="form-text text-muted">Typically 40% of total marks</small>
                         </div>
                     </div>
                     
                     <!-- Instructions -->
                     <div class="mb-3">
-                        <label for="instructions" class="form-label">Instructions</label>
-                        <textarea class="form-control" id="instructions" name="instructions" rows="4" 
-                                  placeholder="Enter exam instructions for students..."></textarea>
-                    </div>
-                    
-                    <!-- Additional Settings -->
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h6 class="mb-0">Additional Settings</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="publishResults" name="publish_results">
-                                        <label class="form-check-label" for="publishResults">
-                                            Auto-publish results after grading
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="sendNotification" name="send_notification" checked>
-                                        <label class="form-check-label" for="sendNotification">
-                                            Send notification to students
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="allowLateSubmission" name="allow_late">
-                                        <label class="form-check-label" for="allowLateSubmission">
-                                            Allow late submission
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="requireAttendance" name="require_attendance" checked>
-                                        <label class="form-check-label" for="requireAttendance">
-                                            Require attendance for exam
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <label for="{{ form.instructions.id_for_label }}" class="form-label">Instructions</label>
+                        {{ form.instructions }}
+                        {% if form.instructions.help_text %}
+                        <small class="form-text text-muted">{{ form.instructions.help_text }}</small>
+                        {% endif %}
                     </div>
                     
                     <!-- Action Buttons -->
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-secondary me-md-2" onclick="saveDraft()">
-                            <i class="fas fa-save"></i> Save as Draft
-                        </button>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                         <a href="{% url 'examination:exam_list' %}" class="btn btn-outline-secondary me-md-2">
                             <i class="fas fa-times"></i> Cancel
                         </a>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i> Create & Publish Exam
+                            <i class="fas fa-paper-plane"></i> Create Exam
                         </button>
                     </div>
                 </form>
@@ -164,44 +142,24 @@
 
 <script>
 // Auto-calculate passing marks (40% of total marks)
-document.getElementById('totalMarks').addEventListener('input', function() {
+document.getElementById('{{ form.total_marks.id_for_label }}').addEventListener('input', function() {
     const totalMarks = parseInt(this.value);
     if (totalMarks > 0) {
         const passingMarks = Math.ceil(totalMarks * 0.4);
-        document.getElementById('passingMarks').value = passingMarks;
-    }
-});
-
-// Validate end time is after start time
-document.getElementById('endTime').addEventListener('change', function() {
-    const startTime = document.getElementById('startTime').value;
-    const endTime = this.value;
-    
-    if (startTime && endTime && endTime <= startTime) {
-        alert('End time must be after start time');
-        this.value = '';
+        document.getElementById('{{ form.passing_marks.id_for_label }}').value = passingMarks;
     }
 });
 
 // Set minimum date to today
-document.getElementById('examDate').min = new Date().toISOString().split('T')[0];
-
-function saveDraft() {
-    // Add a hidden field to indicate this is a draft
-    const form = document.getElementById('examForm');
-    const draftInput = document.createElement('input');
-    draftInput.type = 'hidden';
-    draftInput.name = 'save_as_draft';
-    draftInput.value = 'true';
-    form.appendChild(draftInput);
-    
-    form.submit();
+const examDateField = document.getElementById('{{ form.exam_date.id_for_label }}');
+if (examDateField) {
+    examDateField.min = new Date().toISOString().split('T')[0];
 }
 
 // Form validation
 document.getElementById('examForm').addEventListener('submit', function(e) {
-    const totalMarks = parseInt(document.getElementById('totalMarks').value);
-    const passingMarks = parseInt(document.getElementById('passingMarks').value);
+    const totalMarks = parseInt(document.getElementById('{{ form.total_marks.id_for_label }}').value);
+    const passingMarks = parseInt(document.getElementById('{{ form.passing_marks.id_for_label }}').value);
     
     if (passingMarks >= totalMarks) {
         e.preventDefault();
