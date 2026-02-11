@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Exam - SMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-plus-circle"></i> Create New Exam</h2>
+            <a href="{% url 'examination:exam_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Exams
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h6 class="m-0"><i class="fas fa-clipboard-list"></i> Exam Details</h6>
+            </div>
+            <div class="card-body">
+                <form method="post" id="examForm">
+                    {% csrf_token %}
+                    
+                    <!-- Basic Information -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="examName" class="form-label">Exam Name *</label>
+                            <input type="text" class="form-control" id="examName" name="exam_name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="examType" class="form-label">Exam Type *</label>
+                            <select class="form-select" id="examType" name="exam_type" required>
+                                <option value="">Select Type</option>
+                                <option value="midterm">Mid-term Exam</option>
+                                <option value="final">Final Exam</option>
+                                <option value="quiz">Quiz</option>
+                                <option value="assignment">Assignment</option>
+                                <option value="practical">Practical Exam</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="subject" class="form-label">Subject *</label>
+                            <select class="form-select" id="subject" name="subject" required>
+                                <option value="">Select Subject</option>
+                                <option value="database">Database Systems</option>
+                                <option value="web-dev">Web Development</option>
+                                <option value="software-eng">Software Engineering</option>
+                                <option value="networks">Computer Networks</option>
+                                <option value="os">Operating Systems</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="class" class="form-label">Class *</label>
+                            <select class="form-select" id="class" name="class" required>
+                                <option value="">Select Class</option>
+                                <option value="cs-6a">CS-6A</option>
+                                <option value="cs-5b">CS-5B</option>
+                                <option value="cs-7a">CS-7A</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Date and Time -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="examDate" class="form-label">Exam Date *</label>
+                            <input type="date" class="form-control" id="examDate" name="exam_date" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="startTime" class="form-label">Start Time *</label>
+                            <input type="time" class="form-control" id="startTime" name="start_time" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="endTime" class="form-label">End Time *</label>
+                            <input type="time" class="form-control" id="endTime" name="end_time" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Marks and Venue -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="totalMarks" class="form-label">Total Marks *</label>
+                            <input type="number" class="form-control" id="totalMarks" name="total_marks" min="1" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="passingMarks" class="form-label">Passing Marks *</label>
+                            <input type="number" class="form-control" id="passingMarks" name="passing_marks" min="1" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="venue" class="form-label">Venue</label>
+                            <input type="text" class="form-control" id="venue" name="venue" placeholder="e.g., Room 201">
+                        </div>
+                    </div>
+                    
+                    <!-- Instructions -->
+                    <div class="mb-3">
+                        <label for="instructions" class="form-label">Instructions</label>
+                        <textarea class="form-control" id="instructions" name="instructions" rows="4" 
+                                  placeholder="Enter exam instructions for students..."></textarea>
+                    </div>
+                    
+                    <!-- Additional Settings -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h6 class="mb-0">Additional Settings</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="publishResults" name="publish_results">
+                                        <label class="form-check-label" for="publishResults">
+                                            Auto-publish results after grading
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="sendNotification" name="send_notification" checked>
+                                        <label class="form-check-label" for="sendNotification">
+                                            Send notification to students
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="allowLateSubmission" name="allow_late">
+                                        <label class="form-check-label" for="allowLateSubmission">
+                                            Allow late submission
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="requireAttendance" name="require_attendance" checked>
+                                        <label class="form-check-label" for="requireAttendance">
+                                            Require attendance for exam
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-secondary me-md-2" onclick="saveDraft()">
+                            <i class="fas fa-save"></i> Save as Draft
+                        </button>
+                        <a href="{% url 'examination:exam_list' %}" class="btn btn-outline-secondary me-md-2">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Create & Publish Exam
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-calculate passing marks (40% of total marks)
+document.getElementById('totalMarks').addEventListener('input', function() {
+    const totalMarks = parseInt(this.value);
+    if (totalMarks > 0) {
+        const passingMarks = Math.ceil(totalMarks * 0.4);
+        document.getElementById('passingMarks').value = passingMarks;
+    }
+});
+
+// Validate end time is after start time
+document.getElementById('endTime').addEventListener('change', function() {
+    const startTime = document.getElementById('startTime').value;
+    const endTime = this.value;
+    
+    if (startTime && endTime && endTime <= startTime) {
+        alert('End time must be after start time');
+        this.value = '';
+    }
+});
+
+// Set minimum date to today
+document.getElementById('examDate').min = new Date().toISOString().split('T')[0];
+
+function saveDraft() {
+    // Add a hidden field to indicate this is a draft
+    const form = document.getElementById('examForm');
+    const draftInput = document.createElement('input');
+    draftInput.type = 'hidden';
+    draftInput.name = 'save_as_draft';
+    draftInput.value = 'true';
+    form.appendChild(draftInput);
+    
+    form.submit();
+}
+
+// Form validation
+document.getElementById('examForm').addEventListener('submit', function(e) {
+    const totalMarks = parseInt(document.getElementById('totalMarks').value);
+    const passingMarks = parseInt(document.getElementById('passingMarks').value);
+    
+    if (passingMarks >= totalMarks) {
+        e.preventDefault();
+        alert('Passing marks must be less than total marks');
+        return false;
+    }
+    
+    // Show loading state
+    const submitBtn = document.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Exam...';
+    submitBtn.disabled = true;
+});
+</script>
+{% endblock %}

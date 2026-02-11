@@ -1,0 +1,592 @@
+/* ================================
+   Global Styles
+================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #0d6efd;
+    --primary-dark: #0b5ed7;
+    --bg-light: #f4f6f9;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --card-radius: 12px;
+    --transition: all 0.25s ease-in-out;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+
+/* ================================
+   Navbar
+================================ */
+/* ================================
+   Professional Navbar (No Blue)
+================================ */
+.navbar-professional {
+    background-color: #1f2937; /* charcoal */
+    padding: 0.75rem 1rem;
+}
+
+.navbar-professional .navbar-brand {
+    font-weight: 700;
+    color: #f9fafb !important;
+}
+
+.navbar-professional .navbar-brand i {
+    color: #22c55e; /* accent green */
+}
+
+.navbar-professional .nav-link {
+    color: #e5e7eb !important;
+    font-weight: 500;
+    border-radius: 8px;
+    margin: 0 2px;
+    transition: all 0.2s ease;
+}
+
+.navbar-professional .nav-link:hover {
+    background-color: #374151;
+    color: #ffffff !important;
+}
+
+.navbar-professional .dropdown-menu {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: none;
+    padding: 0.4rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.navbar-professional .dropdown-item {
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.navbar-professional .dropdown-item:hover {
+    background-color: #22c55e;
+    color: #ffffff;
+}
+
+/* User dropdown icon */
+.navbar-professional .fa-user {
+    color: #22c55e;
+}
+
+/* ================================
+   Main Content
+================================ */
+main.container-fluid {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* ================================
+   Alerts
+================================ */
+.alert {
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.alert-success {
+    background-color: #eafaf1;
+    color: #146c43;
+}
+
+.alert-danger {
+    background-color: #fdecea;
+    color: #842029;
+}
+
+.alert-warning {
+    background-color: #fff4e5;
+    color: #664d03;
+}
+
+.alert-info {
+    background-color: #e7f1ff;
+    color: #084298;
+}
+
+/* ================================
+   Cards
+================================ */
+.card {
+    border: none;
+    border-radius: var(--card-radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+/* ================================
+   Buttons
+================================ */
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 0.45rem 1rem;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* ================================
+   Forms
+================================ */
+.form-control,
+.form-select {
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    transition: var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+}
+
+/* ================================
+   Tables
+================================ */
+.table {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #f1f3f5;
+}
+
+.table th {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+    padding: 0.75rem;
+}
+
+/* ================================
+   Footer (optional)
+================================ */
+.footer {
+    text-align: center;
+    padding: 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* ================================
+   Responsive Tweaks
+================================ */
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        margin-bottom: 0.25rem;
+    }
+
+    main.container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+
+
+
+/* =================================================
+   Global Styles
+================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-light: #f4f6f9;
+    --text-dark: #111827;
+    --text-muted: #6b7280;
+    --accent: #22c55e;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+
+/* =================================================
+   Professional Navbar (No Blue)
+================================================= */
+.navbar-professional {
+    background-color: #1f2937;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.navbar-professional .navbar-brand {
+    font-weight: 700;
+    color: #f9fafb !important;
+}
+
+.navbar-professional .navbar-brand i {
+    color: var(--accent);
+}
+
+.navbar-professional .nav-link {
+    color: #e5e7eb !important;
+    font-weight: 500;
+    border-radius: 8px;
+    margin: 0 2px;
+    transition: all 0.2s ease;
+}
+
+.navbar-professional .nav-link:hover {
+    background-color: #374151;
+    color: #ffffff !important;
+}
+
+.navbar-professional .dropdown-menu {
+    border-radius: 10px;
+    border: none;
+    padding: 0.4rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.navbar-professional .dropdown-item {
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.navbar-professional .dropdown-item:hover {
+    background-color: var(--accent);
+    color: #ffffff;
+}
+
+/* =================================================
+   Dashboard Header
+================================================= */
+.dashboard-title {
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-bottom: 0.25rem;
+}
+
+.dashboard-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* =================================================
+   Cards (ERP Look)
+================================================= */
+.card {
+    border-radius: 14px;
+    border: none;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
+.card-header {
+    background-color: #f9fafb !important;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+    color: var(--text-dark) !important;
+}
+
+.card-header h6 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* Neutralize Bootstrap Header Colors */
+.card-header.bg-primary,
+.card-header.bg-success,
+.card-header.bg-info,
+.card-header.bg-warning,
+.card-header.bg-secondary {
+    background-color: #f9fafb !important;
+    color: var(--text-dark) !important;
+}
+
+/* =================================================
+   List Groups (Today's Classes)
+================================================= */
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 0;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+.list-group-item h6 {
+    font-weight: 600;
+}
+
+.list-group-item small {
+    color: var(--text-muted);
+}
+
+/* =================================================
+   Badges
+================================================= */
+.badge {
+    border-radius: 999px;
+    padding: 0.35em 0.6em;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.badge.bg-success { background-color: #16a34a !important; }
+.badge.bg-danger { background-color: #dc2626 !important; }
+.badge.bg-secondary { background-color: #6b7280 !important; }
+.badge.bg-primary { background-color: #2563eb !important; }
+
+/* =================================================
+   Quick Statistics
+================================================= */
+.card-body .row.text-center h4 {
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
+.card-body .row.text-center small {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* =================================================
+   Buttons (ERP Style)
+================================================= */
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.btn-group .btn {
+    padding: 0.3rem 0.6rem;
+}
+
+.btn-outline-primary,
+.btn-outline-success,
+.btn-outline-info,
+.btn-outline-warning {
+    border-width: 1.5px;
+}
+
+/* =================================================
+   Tables
+================================================= */
+.table {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #f3f4f6;
+}
+
+.table th {
+    font-weight: 600;
+    color: var(--text-dark);
+    border-bottom: none;
+}
+
+.table td {
+    vertical-align: middle;
+    color: #374151;
+}
+
+/* =================================================
+   Empty States
+================================================= */
+.text-center i {
+    opacity: 0.5;
+}
+
+.text-center h6 {
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+/* =================================================
+   Dashboard Spacing
+================================================= */
+.row > [class^="col"] {
+    margin-bottom: 1rem;
+}
+
+/* =================================================
+   Responsive Fixes
+================================================= */
+@media (max-width: 768px) {
+    .dashboard-title {
+        font-size: 1.3rem;
+    }
+
+    .navbar-professional .nav-link {
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* =================================================
+   Layout Wrapper
+================================================= */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =================================================
+   Sidebar
+================================================= */
+.sidebar {
+    width: 260px;
+    background-color: #111827;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1.2rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f9fafb;
+    border-bottom: 1px solid #1f2937;
+}
+
+.sidebar-brand i {
+    color: #22c55e;
+    font-size: 1.4rem;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu li {
+    margin-bottom: 4px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.7rem 1.5rem;
+    color: #d1d5db;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a i {
+    width: 18px;
+    text-align: center;
+}
+
+.sidebar-menu a:hover {
+    background-color: #1f2937;
+    color: #ffffff;
+}
+
+.sidebar-menu .logout {
+    color: #f87171;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background-color: #1f2937;
+    margin: 1rem 0;
+}
+
+/* =================================================
+   Main Content Area
+================================================= */
+.main-content {
+    margin-left: 260px;
+    padding: 1.5rem;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* =================================================
+   Responsive (Mobile)
+================================================= */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+
+
+/* Optional: subtle background image overlay */
+/* ================= Login Page Styles ================= */
+
+
