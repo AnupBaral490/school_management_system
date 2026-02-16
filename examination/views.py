@@ -46,6 +46,32 @@ def exam_list(request):
 def result_list(request):
     """List exam results based on user type"""
     if request.user.user_type == 'student':
+        # Check fee payment status first
+        from fees.models import StudentFee
+        unpaid_fees = StudentFee.objects.filter(
+            student=request.user.student_profile,
+            payment_status__in=['pending', 'partial', 'overdue']
+        ).select_related('fee_structure')
+        
+        has_unpaid_fees = unpaid_fees.exists()
+        total_unpaid_amount = sum(fee.balance_amount for fee in unpaid_fees)
+        
+        # If fees are unpaid, show warning and restrict access
+        if has_unpaid_fees:
+            context = {
+                'has_unpaid_fees': True,
+                'unpaid_fees': unpaid_fees,
+                'total_unpaid_amount': total_unpaid_amount,
+                'results': [],
+                'student_stats': {
+                    'total_exams': 0,
+                    'average_percentage': 0,
+                    'gpa': 0.0,
+                    'overall_grade': 'N/A'
+                }
+            }
+            return render(request, 'examination/result_list.html', context)
+        
         # Show only student's own results
         results = ExamResult.objects.filter(
             student=request.user.student_profile

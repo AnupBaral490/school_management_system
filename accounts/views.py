@@ -67,6 +67,16 @@ def dashboard(request):
             student_profile = user.student_profile
             from academic.models import Assignment, AssignmentSubmission, Subject
             from attendance.models import AttendanceRecord
+            from fees.models import StudentFee
+            
+            # Check fee payment status
+            unpaid_fees = StudentFee.objects.filter(
+                student=student_profile,
+                payment_status__in=['pending', 'partial', 'overdue']
+            ).select_related('fee_structure')
+            
+            has_unpaid_fees = unpaid_fees.exists()
+            total_unpaid_amount = sum(fee.balance_amount for fee in unpaid_fees)
             
             # Get the current enrollment using the helper method
             enrollment = student_profile.get_current_enrollment()
@@ -157,7 +167,10 @@ def dashboard(request):
                 'absent_sessions': absent_sessions,
                 'recent_grades': recent_grades,
                 'today': django_timezone.now().date(),
-                'chart_data_json': chart_data_json
+                'chart_data_json': chart_data_json,
+                'has_unpaid_fees': has_unpaid_fees,
+                'unpaid_fees': unpaid_fees,
+                'total_unpaid_amount': total_unpaid_amount
             })
             
         except (StudentProfile.DoesNotExist, StudentEnrollment.DoesNotExist):
@@ -465,6 +478,33 @@ def dashboard(request):
             # Convert to JSON and mark as safe for template
             chart_data_json = mark_safe(f'<script>window.chartData = {json.dumps(chart_data)};</script>')
             
+            # Get students with unpaid fees from teacher's classes
+            from fees.models import StudentFee
+            from academic.models import StudentEnrollment
+            
+            students_with_unpaid_fees = []
+            for assignment in teacher_assignments:
+                class_obj = assignment.class_assigned
+                enrollments = StudentEnrollment.objects.filter(
+                    class_enrolled=class_obj,
+                    is_active=True
+                ).select_related('student__user')
+                
+                for enrollment in enrollments:
+                    unpaid_fees = StudentFee.objects.filter(
+                        student=enrollment.student,
+                        payment_status__in=['pending', 'partial', 'overdue']
+                    ).select_related('fee_structure')
+                    
+                    if unpaid_fees.exists():
+                        total_unpaid = sum(fee.balance_amount for fee in unpaid_fees)
+                        students_with_unpaid_fees.append({
+                            'student': enrollment.student,
+                            'class': class_obj,
+                            'total_unpaid': total_unpaid,
+                            'fee_count': unpaid_fees.count()
+                        })
+            
             context.update({
                 'teacher_assignments': teacher_assignments,
                 'created_assignments': created_assignments,
@@ -489,6 +529,8 @@ def dashboard(request):
                 'avg_grade': round(avg_grade, 1) if avg_grade else 0,
                 # Chart data as JSON
                 'chart_data_json': chart_data_json,
+                # Fee information
+                'students_with_unpaid_fees': students_with_unpaid_fees[:10],  # Limit to 10 for display
             })
             
         except TeacherProfile.DoesNotExist:
@@ -513,6 +555,7 @@ def dashboard(request):
             from attendance.models import AttendanceRecord
             from notifications.models import Notification
             from examination.models import Examination, ExamResult
+            from fees.models import StudentFee
             from datetime import timedelta
             
             # Get parent's children
@@ -544,6 +587,23 @@ def dashboard(request):
                     attendance_percentage = (present_sessions / total_sessions * 100) if total_sessions > 0 else 0
                 except Exception as e:
                     print(f"Error getting attendance for {child}: {e}")
+                
+                # Check fee payment status
+                has_unpaid_fees = False
+                total_unpaid_amount = 0
+                unpaid_fees = []
+                
+                try:
+                    unpaid_fees = StudentFee.objects.filter(
+                        student=child,
+                        payment_status__in=['pending', 'partial', 'overdue']
+                    ).select_related('fee_structure')
+                    
+                    has_unpaid_fees = unpaid_fees.exists()
+                    total_unpaid_amount = sum(fee.balance_amount for fee in unpaid_fees) if has_unpaid_fees else 0
+                except Exception as fee_error:
+                    print(f"Error getting fees for {child}: {fee_error}")
+                    # Continue without fee data if there's an error
                 
                 # Get subjects and grades for this child
                 subjects_with_grades = []
@@ -674,13 +734,19 @@ def dashboard(request):
                     'gpa': round(gpa, 2),
                     'total_sessions': total_sessions,
                     'present_sessions': present_sessions,
-                    'subjects': subjects_with_grades
+                    'subjects': subjects_with_grades,
+                    'has_unpaid_fees': has_unpaid_fees,
+                    'unpaid_fees': unpaid_fees,
+                    'total_unpaid_amount': total_unpaid_amount
                 }
                 children_data.append(child_info)
                 print(f"[DEBUG] Added child: {child.user.get_full_name()}, Enrollment: {enrollment}, Subjects: {len(subjects_with_grades)}")
             
             # Sort upcoming events by date
             upcoming_events.sort(key=lambda x: x['date'])
+            
+            # Check if any child has unpaid fees
+            any_child_has_unpaid_fees = any(child_info['has_unpaid_fees'] for child_info in children_data)
             
             # Get recent notifications for parent's children
             child_user_ids = [child.user.id for child in children_profiles]
@@ -693,7 +759,8 @@ def dashboard(request):
                 'children_data': children_data,
                 'recent_notifications': recent_notifications,
                 'upcoming_events': upcoming_events[:10],  # Limit to 10 events
-                'today': django_timezone.now().date()
+                'today': django_timezone.now().date(),
+                'any_child_has_unpaid_fees': any_child_has_unpaid_fees
             })
             
             print(f"[DEBUG] Context updated - children_data count: {len(children_data)}")

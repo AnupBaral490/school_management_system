@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'attendance',
     'examination',
     'notifications',
+    'fees.apps.FeesConfig',
 ]
 
 MIDDLEWARE = [
