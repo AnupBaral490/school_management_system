@@ -122,23 +122,41 @@
     </div>
 </div>
 
-<!-- Enhanced Statistics Charts - Below Quick Stats -->
+<!-- Enhanced Statistics Charts - Professional Design -->
 <div class="row mb-4">
     <!-- Assignment Submissions Chart -->
     <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-header bg-white border-bottom">
-                <h6 class="m-0 text-dark fw-semibold"><i class="fas fa-chart-bar text-primary me-2"></i>Assignment Submissions</h6>
-            </div>
-            <div class="card-body p-3">
-                <div style="position: relative; height: 220px; width: 100%;">
-                    <canvas id="assignmentChart" style="display: block; width: 100%; height: 100%;"></canvas>
+        <div class="card chart-card shadow-lg border-0 h-100">
+            <div class="card-header chart-header-gradient-primary">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div class="chart-header-icon me-3">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-white fw-bold">Assignment Submissions</h6>
+                            <small class="text-white-50">Submission tracking</small>
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-3">
+            </div>
+            <div class="card-body p-4">
+                <div class="chart-container-responsive">
+                    <canvas id="assignmentChart"></canvas>
+                </div>
+                <div class="chart-legend-section mt-4">
                     {% for stat in assignment_stats %}
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <small class="text-muted">{{ stat.class_name }}</small>
-                        <span class="badge bg-primary rounded-pill">{{ stat.submission_rate }}%</span>
+                    <div class="chart-stat-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-indicator stat-indicator-primary me-2"></div>
+                                <span class="stat-label">{{ stat.class_name }}</span>
+                            </div>
+                            <span class="stat-badge badge-gradient-primary">{{ stat.submission_rate }}%</span>
+                        </div>
+                        <div class="progress progress-modern mt-2">
+                            <div class="progress-bar progress-bar-gradient-primary" style="width: {{ stat.submission_rate }}%"></div>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -148,21 +166,39 @@
 
     <!-- Student Passing Rate Chart -->
     <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-header bg-white border-bottom">
-                <h6 class="m-0 text-dark fw-semibold"><i class="fas fa-chart-line text-success me-2"></i>Student Passing Rate</h6>
-            </div>
-            <div class="card-body p-3">
-                <div style="position: relative; height: 220px; width: 100%;">
-                    <canvas id="passingChart" style="display: block; width: 100%; height: 100%;"></canvas>
+        <div class="card chart-card shadow-lg border-0 h-100">
+            <div class="card-header chart-header-gradient-success">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div class="chart-header-icon me-3">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-white fw-bold">Student Passing Rate</h6>
+                            <small class="text-white-50">Performance metrics</small>
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-3">
+            </div>
+            <div class="card-body p-4">
+                <div class="chart-container-responsive">
+                    <canvas id="passingChart"></canvas>
+                </div>
+                <div class="chart-legend-section mt-4">
                     {% for stat in passing_stats %}
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <small class="text-muted">{{ stat.class_name }}</small>
-                        <span class="badge bg-{% if stat.passing_rate >= 80 %}success{% elif stat.passing_rate >= 60 %}warning{% else %}danger{% endif %} rounded-pill">
-                            {{ stat.passing_rate }}%
-                        </span>
+                    <div class="chart-stat-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-indicator {% if stat.passing_rate >= 80 %}stat-indicator-success{% elif stat.passing_rate >= 60 %}stat-indicator-warning{% else %}stat-indicator-danger{% endif %} me-2"></div>
+                                <span class="stat-label">{{ stat.class_name }}</span>
+                            </div>
+                            <span class="stat-badge {% if stat.passing_rate >= 80 %}badge-gradient-success{% elif stat.passing_rate >= 60 %}badge-gradient-warning{% else %}badge-gradient-danger{% endif %}">
+                                {{ stat.passing_rate }}%
+                            </span>
+                        </div>
+                        <div class="progress progress-modern mt-2">
+                            <div class="progress-bar {% if stat.passing_rate >= 80 %}progress-bar-gradient-success{% elif stat.passing_rate >= 60 %}progress-bar-gradient-warning{% else %}progress-bar-gradient-danger{% endif %}" style="width: {{ stat.passing_rate }}%"></div>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -172,25 +208,40 @@
 
     <!-- Syllabus Progress Chart -->
     <div class="col-lg-4 col-md-12 mb-4">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-header bg-white border-bottom">
-                <h6 class="m-0 text-dark fw-semibold"><i class="fas fa-chart-pie text-info me-2"></i>Syllabus Progress</h6>
-            </div>
-            <div class="card-body p-3">
-                <div style="position: relative; height: 220px; width: 100%;">
-                    <canvas id="syllabusChart" style="display: block; width: 100%; height: 100%;"></canvas>
+        <div class="card chart-card shadow-lg border-0 h-100">
+            <div class="card-header chart-header-gradient-info">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div class="chart-header-icon me-3">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-white fw-bold">Syllabus Progress</h6>
+                            <small class="text-white-50">Course completion</small>
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-3">
+            </div>
+            <div class="card-body p-4">
+                <div class="chart-container-responsive">
+                    <canvas id="syllabusChart"></canvas>
+                </div>
+                <div class="chart-legend-section mt-4">
                     {% for progress in syllabus_progress %}
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between">
-                            <small class="text-muted">{{ progress.subject_name|truncatechars:15 }}</small>
-                            <small class="text-primary fw-medium">{{ progress.progress_percentage }}%</small>
+                    <div class="chart-stat-item">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-indicator stat-indicator-info me-2"></div>
+                                <div>
+                                    <span class="stat-label d-block">{{ progress.subject_name|truncatechars:20 }}</span>
+                                    <small class="text-muted">{{ progress.class_name }}</small>
+                                </div>
+                            </div>
+                            <span class="stat-badge badge-gradient-info">{{ progress.progress_percentage }}%</span>
                         </div>
-                        <div class="progress mt-1" style="height: 6px;">
-                            <div class="progress-bar bg-info" style="width: {{ progress.progress_percentage }}%"></div>
+                        <div class="progress progress-modern">
+                            <div class="progress-bar progress-bar-gradient-info progress-bar-animated" style="width: {{ progress.progress_percentage }}%"></div>
                         </div>
-                        <small class="text-muted">{{ progress.class_name }}</small>
                     </div>
                     {% endfor %}
                 </div>
@@ -1264,6 +1315,668 @@ document.addEventListener('DOMContentLoaded', function() {
     .action-subtitle-horizontal {
         font-size: 0.6rem;
     }
+}
+
+/* ============================================
+   PROFESSIONAL TEACHER DASHBOARD ENHANCEMENTS
+   ============================================ */
+
+/* Modern Dashboard Header */
+.dashboard-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Enhanced Card Styling */
+.card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+}
+
+.card-header {
+    border: none;
+    border-radius: 15px 15px 0 0 !important;
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+}
+
+/* Gradient Headers */
+.bg-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.bg-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+}
+
+.bg-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+.bg-warning {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+}
+
+.bg-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%) !important;
+}
+
+.bg-secondary {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%) !important;
+}
+
+/* Professional Stats Cards */
+.bg-opacity-10 {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-opacity-10::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+}
+
+/* Enhanced Table Styling */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+}
+
+.table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Professional Buttons */
+.btn {
+    border-radius: 10px;
+    padding: 0.625rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+/* Badge Enhancements */
+.badge {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+/* List Group Modern Style */
+.list-group-item {
+    border: none;
+    border-radius: 10px !important;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.list-group-item:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    transform: translateX(5px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Progress Bar Enhancement */
+.progress {
+    height: 8px;
+    border-radius: 10px;
+    background: #e9ecef;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+/* Notification Bell Enhancement */
+.notification-bell-btn {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 2px solid #e9ecef;
+}
+
+.notification-bell-btn:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    transform: scale(1.1);
+}
+
+/* Chart Card Enhancement */
+.chart-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Empty State Styling */
+.empty-state {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.empty-state i {
+    opacity: 0.3;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state h6 {
+    color: #6c757d;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: #adb5bd;
+    font-size: 0.95rem;
+}
+
+/* Activity Item Enhancement */
+.activity-item {
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.activity-item:hover {
+    border-left-color: #667eea;
+    background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%) !important;
+}
+
+/* Icon Enhancements */
+.rounded-circle {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Smooth Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card, .alert {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Professional Shadow System */
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+.shadow {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    .dashboard-title {
+        font-size: 1.75rem;
+    }
+    
+    .dashboard-subtitle {
+        font-size: 1rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Professional Color Palette */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+/* ============================================
+   PROFESSIONAL CHART SECTION ENHANCEMENTS
+   ============================================ */
+
+/* Chart Card Enhancements */
+.chart-card {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.chart-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+}
+
+/* Gradient Chart Headers */
+.chart-header-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.5rem;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-header-gradient-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 4s infinite;
+}
+
+.chart-header-gradient-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    padding: 1.5rem;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-header-gradient-success::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 4s infinite;
+}
+
+.chart-header-gradient-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    padding: 1.5rem;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-header-gradient-info::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 4s infinite;
+}
+
+/* Chart Header Icon */
+.chart-header-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Chart Container */
+.chart-container-responsive {
+    position: relative;
+    height: 280px;
+    width: 100%;
+    padding: 10px;
+}
+
+@media (max-width: 1200px) {
+    .chart-container-responsive {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-container-responsive {
+        height: 220px;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container-responsive {
+        height: 200px;
+    }
+}
+
+/* Chart Legend Section */
+.chart-legend-section {
+    border-top: 2px solid #f0f0f0;
+    padding-top: 1.5rem;
+}
+
+.chart-stat-item {
+    padding: 1rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.chart-stat-item:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-left-color: #667eea;
+}
+
+/* Stat Indicators */
+.stat-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.stat-indicator-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-indicator-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.stat-indicator-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-indicator-warning {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.stat-indicator-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+/* Stat Labels */
+.stat-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Gradient Badges */
+.stat-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.stat-badge:hover {
+    transform: scale(1.1);
+}
+
+.badge-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.badge-gradient-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.badge-gradient-info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.badge-gradient-warning {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.badge-gradient-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+/* Modern Progress Bars */
+.progress-modern {
+    height: 10px;
+    border-radius: 10px;
+    background: #e9ecef;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-bar-gradient-primary {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.progress-bar-gradient-success {
+    background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(17, 153, 142, 0.4);
+}
+
+.progress-bar-gradient-info {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(79, 172, 254, 0.4);
+}
+
+.progress-bar-gradient-warning {
+    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(250, 112, 154, 0.4);
+}
+
+.progress-bar-gradient-danger {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ee5a6f 100%);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+.progress-bar-animated {
+    animation: progressAnimation 2s ease-in-out infinite;
+}
+
+@keyframes progressAnimation {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Chart Card Body */
+.chart-card .card-body {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+/* Responsive Chart Headers */
+@media (max-width: 768px) {
+    .chart-header-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .chart-header-gradient-primary,
+    .chart-header-gradient-success,
+    .chart-header-gradient-info {
+        padding: 1rem;
+    }
+    
+    .chart-header-gradient-primary h6,
+    .chart-header-gradient-success h6,
+    .chart-header-gradient-info h6 {
+        font-size: 0.9rem;
+    }
+    
+    .chart-header-gradient-primary small,
+    .chart-header-gradient-success small,
+    .chart-header-gradient-info small {
+        font-size: 0.75rem;
+    }
+}
+
+/* Chart Loading State */
+.chart-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 280px;
+    color: #6c757d;
+}
+
+.chart-loading i {
+    font-size: 3rem;
+    animation: pulse 2s infinite;
+}
+
+/* Chart Empty State */
+.chart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 280px;
+    color: #adb5bd;
+}
+
+.chart-empty i {
+    font-size: 4rem;
+    opacity: 0.3;
+    margin-bottom: 1rem;
+}
+
+.chart-empty p {
+    font-size: 0.95rem;
+    margin: 0;
 }
 </style>
 
