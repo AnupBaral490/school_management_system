@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django import forms
 from django.db import models
 from .models import FeeStructure, StudentFee, FeePayment, FeeWaiver
-from accounts.models import User
+from accounts.models import User, StudentProfile
 
 
 class FeePaymentForm(forms.ModelForm):
@@ -63,8 +63,24 @@ class FeeWaiverInline(admin.TabularInline):
     fields = ('waiver_type', 'amount', 'percentage', 'reason', 'approved_by', 'is_active')
 
 
+class StudentFeeForm(forms.ModelForm):
+    """Custom form to display student names in dropdown"""
+    class Meta:
+        model = StudentFee
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Customize student field to show full name and student ID
+        if 'student' in self.fields:
+            students = StudentProfile.objects.select_related('user').order_by('user__first_name', 'user__last_name')
+            # Create choices with student name and ID
+            self.fields['student'].label_from_instance = lambda obj: f"{obj.user.get_full_name()} ({obj.student_id})"
+
+
 @admin.register(StudentFee)
 class StudentFeeAdmin(admin.ModelAdmin):
+    form = StudentFeeForm
     list_display = ('student_name', 'student_id', 'fee_structure', 'amount_due_display', 'amount_paid_display', 
                     'balance_display', 'payment_status_badge', 'due_date')
     list_filter = ('payment_status', 'fee_structure__academic_year', 'fee_structure__frequency', 
@@ -72,6 +88,13 @@ class StudentFeeAdmin(admin.ModelAdmin):
     search_fields = ('student__user__first_name', 'student__user__last_name', 'student__student_id')
     readonly_fields = ('balance_amount', 'is_paid', 'is_overdue', 'created_at', 'updated_at')
     inlines = [FeePaymentInline, FeeWaiverInline]
+    list_select_related = ('student', 'student__user', 'fee_structure', 'fee_structure__class_assigned', 'fee_structure__academic_year')
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """Customize the student dropdown to show name and ID"""
+        if db_field.name == "student":
+            kwargs["queryset"] = StudentProfile.objects.select_related('user').order_by('user__first_name', 'user__last_name')
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
     
     fieldsets = (
         ('Student Information', {
@@ -98,12 +121,21 @@ class StudentFeeAdmin(admin.ModelAdmin):
     actions = ['mark_as_paid', 'send_payment_reminder']
     
     def student_name(self, obj):
-        return obj.student.user.get_full_name()
+        if obj.student and obj.student.user:
+            full_name = obj.student.user.get_full_name()
+            if full_name:
+                return full_name
+            return obj.student.user.username
+        return "N/A"
     student_name.short_description = 'Student Name'
+    student_name.admin_order_field = 'student__user__first_name'
     
     def student_id(self, obj):
-        return obj.student.student_id
+        if obj.student:
+            return obj.student.student_id
+        return "N/A"
     student_id.short_description = 'Student ID'
+    student_id.admin_order_field = 'student__student_id'
     
     def amount_due_display(self, obj):
         if not obj.pk:

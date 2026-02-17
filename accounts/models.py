@@ -43,7 +43,8 @@ class StudentProfile(models.Model):
     blood_group = models.CharField(max_length=5, blank=True)
     
     def __str__(self):
-        return self.user.get_full_name() or self.user.username
+        full_name = self.user.get_full_name() or self.user.username
+        return f"{full_name} ({self.student_id})"
     
     def get_current_enrollment(self):
         """Get the current active enrollment for this student."""
