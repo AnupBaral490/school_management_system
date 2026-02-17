@@ -13,8 +13,11 @@
                         <i class="fas fa-user-graduate me-2 text-primary"></i>
                         Student Dashboard
                     </h2>
-                    <p class="dashboard-subtitle-student mb-0">
-                        Welcome back, <span class="fw-bold text-primary">{{ user.get_full_name|default:user.username }}</span>!
+                    <p style="color: black; font-weight: bold; margin-bottom: 0;">
+                        Welcome back, 
+                        <span style="color: #0d6efd; font-weight: bold; background-color: #e9f2ff; padding: 2px 6px; border-radius: 4px;">
+                            {{ user.get_full_name|default:user.username }}
+                        </span>!
                     </p>
                 </div>
                 <div class="header-actions mt-3 mt-md-0">

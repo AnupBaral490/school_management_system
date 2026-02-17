@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.html import format_html
+from django.urls import reverse
 from .models import User, StudentProfile, TeacherProfile, ParentProfile, AdminProfile, ParentTeacherMessage
 
 class CustomUserAdmin(UserAdmin):
@@ -12,6 +14,22 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('user_type', 'phone_number', 'address', 'date_of_birth', 'profile_picture')
         }),
     )
+    
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # editing an existing object
+            return self.readonly_fields + ('password_change_link',)
+        return self.readonly_fields
+    
+    def password_change_link(self, obj):
+        if obj.pk:
+            url = reverse('admin:auth_user_password_change', args=[obj.pk])
+            return format_html(
+                'Raw passwords are not stored, so there is no way to see this user\'s password, '
+                'but you can change the password using <strong><a href="{}">this form</a></strong>.',
+                url
+            )
+        return ""
+    password_change_link.short_description = 'Password'
 
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
