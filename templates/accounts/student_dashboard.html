@@ -6,26 +6,26 @@
 <!-- Dashboard Header -->
 <div class="row mb-4">
     <div class="col-12">
-        <div class="dashboard-header-student">
+        <div class="dashboard-header-student-modern">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <div class="header-content">
-                    <h2 class="dashboard-title-student mb-2">
-                        <i class="fas fa-user-graduate me-2 text-primary"></i>
+                    <h2 class="dashboard-title-student-modern mb-2">
+                        <i class="fas fa-user-graduate me-3"></i>
                         Student Dashboard
                     </h2>
-                    <p style="color: black; font-weight: bold; margin-bottom: 0;">
+                    <p class="welcome-text-modern mb-0">
                         Welcome back, 
-                        <span style="color: #0d6efd; font-weight: bold; background-color: #e9f2ff; padding: 2px 6px; border-radius: 4px;">
+                        <span class="student-name-highlight">
                             {{ user.get_full_name|default:user.username }}
                         </span>!
                     </p>
                 </div>
                 <div class="header-actions mt-3 mt-md-0">
                     <div class="btn-group" role="group">
-                        <a href="{% url 'accounts:profile' %}" class="btn btn-outline-primary btn-sm">
+                        <a href="{% url 'accounts:profile' %}" class="btn btn-light btn-sm shadow-sm">
                             <i class="fas fa-user me-1"></i>Profile
                         </a>
-                        <a href="{% url 'notifications:notification_list' %}" class="btn btn-outline-primary btn-sm">
+                        <a href="{% url 'notifications:notification_list' %}" class="btn btn-light btn-sm shadow-sm">
                             <i class="fas fa-bell me-1"></i>Notifications
                         </a>
                     </div>

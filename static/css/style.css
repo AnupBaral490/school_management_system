@@ -1497,3 +1497,208 @@ body {
 }
 
 
+
+/* ================================
+   Teacher Dashboard - Class Cards
+================================ */
+.class-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.class-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.class-card .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.25rem;
+}
+
+.class-card .card-header.bg-gradient-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+}
+
+.class-card .card-body {
+    padding: 1.5rem;
+}
+
+.class-card .btn-outline-primary,
+.class-card .btn-outline-success,
+.class-card .btn-outline-info,
+.class-card .btn-outline-warning {
+    border-width: 2px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.class-card .btn-outline-primary:hover {
+    transform: translateX(5px);
+}
+
+.class-card .btn-outline-success:hover {
+    transform: translateX(5px);
+}
+
+.class-card .btn-outline-info:hover {
+    transform: translateX(5px);
+}
+
+.class-card .btn-outline-warning:hover {
+    transform: translateX(5px);
+}
+
+.class-card .card-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding: 1rem 1.5rem;
+}
+
+/* Class Card Icons */
+.class-card .bg-primary.bg-opacity-10 {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Class Section Headers */
+.class-section-header {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 5px solid #0d6efd;
+    margin-bottom: 1.5rem;
+}
+
+.class-section-header h5 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.class-section-header .text-muted {
+    font-size: 0.9rem;
+}
+
+/* ================================
+   Student Dashboard - Modern Header
+================================ */
+.dashboard-header-student-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-header-student-modern::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.dashboard-header-student-modern::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+.dashboard-title-student-modern {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-title-student-modern i {
+    color: #ffd700;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.welcome-text-modern {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+.student-name-highlight {
+    color: #ffd700;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.dashboard-header-student-modern .header-actions {
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-header-student-modern .btn-light {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.dashboard-header-student-modern .btn-light:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-header-student-modern {
+        padding: 1.5rem;
+    }
+    
+    .dashboard-title-student-modern {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-text-modern {
+        font-size: 1rem;
+    }
+    
+    .student-name-highlight {
+        font-size: 1.1rem;
+    }
+}
+
+/* Responsive adjustments for class cards */
+@media (max-width: 768px) {
+    .class-card {
+        margin-bottom: 1rem;
+    }
+    
+    .class-card .card-body {
+        padding: 1rem;
+    }
+    
+    .class-section-header {
+        padding: 1rem;
+    }
+}
