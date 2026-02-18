@@ -253,11 +253,22 @@
 <!-- My Classes - Grouped by Class/Semester -->
 <div class="row mb-4">
     <div class="col-12">
-        <div class="card shadow-sm border-0">
-            <div class="card-header bg-gradient-primary text-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="m-0 fw-bold"><i class="fas fa-chalkboard me-2"></i>My Classes</h5>
-                    <span class="badge bg-white text-primary">{{ teacher_assignments.count }} Subject{{ teacher_assignments.count|pluralize }}</span>
+        <div class="card shadow-lg border-0 classes-main-card">
+            <div class="card-header classes-header border-0">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex align-items-center">
+                        <div class="header-icon-box me-3">
+                            <i class="fas fa-chalkboard"></i>
+                        </div>
+                        <div>
+                            <h4 class="m-0 fw-bold text-white">My Classes</h4>
+                            <small class="text-white-50">Manage your teaching assignments</small>
+                        </div>
+                    </div>
+                    <span class="badge badge-custom mt-2 mt-md-0">
+                        <i class="fas fa-book-reader me-1"></i>
+                        {{ teacher_assignments.count }} Subject{{ teacher_assignments.count|pluralize }}
+                    </span>
                 </div>
             </div>
             <div class="card-body p-4">
@@ -266,20 +277,30 @@
                     
                     {% for class_group in classes_grouped %}
                     <!-- Class Section Header -->
-                    <div class="class-section-header mb-3">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1 text-primary">
-                                    <i class="fas fa-graduation-cap me-2"></i>{{ class_group.grouper }}
-                                </h5>
-                                <p class="text-muted mb-0 small">
-                                    <i class="fas fa-book me-1"></i>{{ class_group.list|length }} Subject{{ class_group.list|length|pluralize }} 
-                                    <span class="mx-2">•</span>
-                                    <i class="fas fa-users me-1"></i>
-                                    {% with first_class=class_group.list.0.class_assigned %}
-                                        {{ first_class.studentenrollment_set.filter.count|default:0 }} Student{{ first_class.studentenrollment_set.count|pluralize }}
-                                    {% endwith %}
-                                </p>
+                    <div class="class-section-header-enhanced mb-4">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap">
+                            <div class="d-flex align-items-center mb-2 mb-md-0">
+                                <div class="class-icon-badge me-3">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1 fw-bold class-title">
+                                        {{ class_group.grouper }}
+                                    </h5>
+                                    <div class="class-meta">
+                                        <span class="meta-item">
+                                            <i class="fas fa-book me-1"></i>
+                                            {{ class_group.list|length }} Subject{{ class_group.list|length|pluralize }}
+                                        </span>
+                                        <span class="meta-divider">•</span>
+                                        <span class="meta-item">
+                                            <i class="fas fa-users me-1"></i>
+                                            {% with first_class=class_group.list.0.class_assigned %}
+                                                {{ first_class.studentenrollment_set.count|default:0 }} Student{{ first_class.studentenrollment_set.count|pluralize }}
+                                            {% endwith %}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -287,53 +308,56 @@
                     <!-- Subjects in this Class -->
                     <div class="row mb-4">
                         {% for assignment in class_group.list %}
-                        <div class="col-lg-6 col-12 mb-3">
-                            <div class="card border-0 shadow-sm h-100 class-card">
+                        <div class="col-xl-4 col-lg-6 col-12 mb-3">
+                            <div class="card border-0 h-100 subject-card-enhanced">
                                 <!-- Subject Header -->
-                                <div class="card-header bg-gradient-info text-white border-0">
+                                <div class="card-header subject-header border-0">
                                     <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <h6 class="mb-1 fw-bold">
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-2 fw-bold text-white subject-name">
                                                 <i class="fas fa-book-open me-2"></i>{{ assignment.subject.name }}
                                             </h6>
-                                            <p class="mb-0 small opacity-90">
+                                            <span class="section-badge">
                                                 <i class="fas fa-tag me-1"></i>Section {{ assignment.class_assigned.section }}
-                                            </p>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <!-- Subject Body -->
-                                <div class="card-body">
+                                <div class="card-body p-3">
                                     <!-- Student Count -->
-                                    <div class="mb-3 pb-3 border-bottom">
+                                    <div class="student-count-box mb-3">
                                         <div class="d-flex align-items-center">
-                                            <div class="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
-                                                <i class="fas fa-user-graduate text-primary"></i>
+                                            <div class="student-icon-circle me-3">
+                                                <i class="fas fa-user-graduate"></i>
                                             </div>
                                             <div>
-                                                <h6 class="mb-0">
+                                                <h5 class="mb-0 fw-bold text-primary">
                                                     {{ assignment.class_assigned.studentenrollment_set.count|default:0 }}
-                                                    Student{{ assignment.class_assigned.studentenrollment_set.count|pluralize }}
-                                                </h6>
-                                                <small class="text-muted">Enrolled in this class</small>
+                                                </h5>
+                                                <small class="text-muted">Student{{ assignment.class_assigned.studentenrollment_set.count|pluralize }} Enrolled</small>
                                             </div>
                                         </div>
                                     </div>
                                     
                                     <!-- Quick Actions -->
-                                    <div class="d-grid gap-2">
-                                        <a href="{% url 'academic:teacher_class_students' assignment.class_assigned.id %}" class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-users me-1"></i>View Students
+                                    <div class="action-buttons">
+                                        <a href="{% url 'academic:teacher_class_students' assignment.class_assigned.id %}" class="action-btn action-btn-primary">
+                                            <i class="fas fa-users"></i>
+                                            <span>Students</span>
                                         </a>
-                                        <a href="{% url 'attendance:mark_attendance' %}?class={{ assignment.class_assigned.id }}&subject={{ assignment.subject.id }}" class="btn btn-outline-success btn-sm">
-                                            <i class="fas fa-check-circle me-1"></i>Mark Attendance
+                                        <a href="{% url 'attendance:mark_attendance' %}?class={{ assignment.class_assigned.id }}&subject={{ assignment.subject.id }}" class="action-btn action-btn-success">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Attendance</span>
                                         </a>
-                                        <a href="{% url 'academic:create_assignment' %}?class={{ assignment.class_assigned.id }}&subject={{ assignment.subject.id }}" class="btn btn-outline-info btn-sm">
-                                            <i class="fas fa-plus me-1"></i>Create Assignment
+                                        <a href="{% url 'academic:create_assignment' %}?class={{ assignment.class_assigned.id }}&subject={{ assignment.subject.id }}" class="action-btn action-btn-info">
+                                            <i class="fas fa-plus"></i>
+                                            <span>Assignment</span>
                                         </a>
-                                        <a href="{% url 'examination:exam_list' %}" class="btn btn-outline-warning btn-sm">
-                                            <i class="fas fa-clipboard-list me-1"></i>View Exams
+                                        <a href="{% url 'examination:exam_list' %}" class="action-btn action-btn-warning">
+                                            <i class="fas fa-clipboard-list"></i>
+                                            <span>Exams</span>
                                         </a>
                                     </div>
                                 </div>
@@ -341,21 +365,21 @@
                                 <!-- Subject Footer - Today's Session -->
                                 {% for session in todays_sessions %}
                                     {% if session.teacher_assignment.class_assigned.id == assignment.class_assigned.id and session.teacher_assignment.subject.id == assignment.subject.id %}
-                                    <div class="card-footer bg-light border-0">
+                                    <div class="card-footer session-footer border-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
-                                                <small class="text-muted d-block">
+                                                <small class="text-muted d-block mb-1">
                                                     <i class="fas fa-clock me-1"></i>Today's Session
                                                 </small>
-                                                <small class="fw-medium">{{ session.start_time|time:"g:i A" }} - {{ session.end_time|time:"g:i A" }}</small>
+                                                <small class="fw-bold text-dark">{{ session.start_time|time:"g:i A" }} - {{ session.end_time|time:"g:i A" }}</small>
                                             </div>
                                             <div>
                                                 {% if session.is_completed %}
-                                                    <span class="badge bg-success">
-                                                        <i class="fas fa-check me-1"></i>Completed
+                                                    <span class="badge bg-success px-3 py-2">
+                                                        <i class="fas fa-check me-1"></i>Done
                                                     </span>
                                                 {% else %}
-                                                    <a href="{% url 'attendance:mark_attendance_session' session.id %}" class="btn btn-sm btn-primary">
+                                                    <a href="{% url 'attendance:mark_attendance_session' session.id %}" class="btn btn-sm btn-primary px-3">
                                                         Mark Now
                                                     </a>
                                                 {% endif %}
@@ -370,7 +394,7 @@
                     </div>
                     
                     {% if not forloop.last %}
-                    <hr class="my-4">
+                    <div class="section-divider"></div>
                     {% endif %}
                     {% endfor %}
                     
