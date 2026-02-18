@@ -1584,107 +1584,321 @@ body {
 }
 
 /* ================================
-   Student Dashboard - Modern Header
+   Student Dashboard - Premium Header
 ================================ */
-.dashboard-header-student-modern {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+.dashboard-header-student-premium {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    padding: 0;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+}
+
+/* Animated Background Pattern */
+.header-background-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+    animation: patternMove 20s ease-in-out infinite;
+}
+
+@keyframes patternMove {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, 20px) scale(1.1); }
+}
+
+.header-content-wrapper {
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+}
+
+/* Icon Wrapper */
+.icon-wrapper-premium {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.icon-wrapper-premium i {
+    font-size: 2rem;
+    color: #764ba2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Title Styling */
+.dashboard-title-premium {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 2.2rem;
+    margin: 0;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.5px;
+}
+
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffd700 0%, transparent 100%);
+    border-radius: 2px;
+    animation: underlineGrow 2s ease-in-out infinite;
+}
+
+@keyframes underlineGrow {
+    0%, 100% { width: 60px; }
+    50% { width: 80px; }
+}
+
+/* Welcome Section */
+.welcome-section-premium {
+    margin-top: 1rem;
+}
+
+.welcome-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.student-name-premium {
+    color: #ffd700;
+    font-weight: 800;
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.student-name-premium .name-text {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-right: 0.5rem;
+}
+
+.wave-animation {
+    display: inline-block;
+    animation: wave 2s ease-in-out infinite;
+    color: #ffd700;
+    font-size: 1.5rem;
+}
+
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    40% { transform: rotate(14deg); }
+    50% { transform: rotate(0deg); }
+}
+
+.welcome-subtitle {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Premium Buttons */
+.header-actions-premium {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.btn-icon-premium {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     position: relative;
     overflow: hidden;
 }
 
-.dashboard-header-student-modern::before {
+.btn-icon-premium::before {
     content: '';
     position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-    background: rgba(255, 255, 255, 0.1);
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
     border-radius: 50%;
+    background: rgba(102, 126, 234, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
 }
 
-.dashboard-header-student-modern::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    left: -5%;
-    width: 200px;
-    height: 200px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 50%;
+.btn-icon-premium:hover::before {
+    width: 100px;
+    height: 100px;
 }
 
-.dashboard-title-student-modern {
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 2rem;
-    margin: 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.btn-icon-premium i {
+    font-size: 1.5rem;
+    color: #764ba2;
     position: relative;
     z-index: 1;
-}
-
-.dashboard-title-student-modern i {
-    color: #ffd700;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.welcome-text-modern {
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 500;
-    position: relative;
-    z-index: 1;
-}
-
-.student-name-highlight {
-    color: #ffd700;
-    font-weight: 700;
-    font-size: 1.2rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 4px 12px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    display: inline-block;
-}
-
-.dashboard-header-student-modern .header-actions {
-    position: relative;
-    z-index: 1;
-}
-
-.dashboard-header-student-modern .btn-light {
-    background: rgba(255, 255, 255, 0.95);
-    border: none;
-    font-weight: 600;
     transition: all 0.3s ease;
 }
 
-.dashboard-header-student-modern .btn-light:hover {
+.btn-icon-premium:hover {
     background: #ffffff;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
 }
 
-/* Responsive adjustments */
+.btn-icon-premium:hover i {
+    color: #667eea;
+    transform: scale(1.1);
+}
+
+.btn-icon-premium:active {
+    transform: translateY(-2px) scale(1);
+}
+
+.btn-premium {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-premium::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-premium:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-premium-light {
+    background: rgba(255, 255, 255, 0.95);
+    color: #764ba2;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-premium-light:hover {
+    background: #ffffff;
+    color: #667eea;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.btn-premium i {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-premium span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .dashboard-header-student-modern {
-        padding: 1.5rem;
+    .dashboard-header-student-premium {
+        min-height: auto;
     }
     
-    .dashboard-title-student-modern {
+    .header-content-wrapper {
+        padding: 2rem 1.5rem;
+    }
+    
+    .icon-wrapper-premium {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .icon-wrapper-premium i {
+        font-size: 1.75rem;
+    }
+    
+    .dashboard-title-premium {
+        font-size: 1.75rem;
+    }
+    
+    .student-name-premium {
         font-size: 1.5rem;
     }
     
-    .welcome-text-modern {
-        font-size: 1rem;
+    .header-actions-premium {
+        justify-content: center;
+        gap: 0.75rem;
     }
     
-    .student-name-highlight {
-        font-size: 1.1rem;
+    .btn-icon-premium {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .btn-icon-premium i {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-title-premium {
+        font-size: 1.5rem;
+    }
+    
+    .student-name-premium {
+        font-size: 1.3rem;
+    }
+    
+    .header-actions-premium {
+        justify-content: center;
+    }
+    
+    .btn-icon-premium {
+        width: 48px;
+        height: 48px;
     }
 }
 
@@ -1700,5 +1914,104 @@ body {
     
     .class-section-header {
         padding: 1rem;
+    }
+}
+
+/* ================================
+   Teacher Dashboard - Schedule Section
+================================ */
+.schedule-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #17a2b8;
+}
+
+.schedule-header h5 {
+    font-weight: 700;
+}
+
+.schedule-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.schedule-table thead {
+    background: #212529 !important;
+}
+
+.schedule-table thead th {
+    color: white !important;
+    font-weight: 700 !important;
+    border: none;
+    padding: 1rem;
+    background: transparent !important;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.schedule-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.schedule-table tbody tr:hover {
+    background-color: #f0f8ff;
+    transform: scale(1.01);
+}
+
+.schedule-table tbody td {
+    vertical-align: middle;
+    padding: 1rem;
+}
+
+.subject-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.schedule-table .btn-group {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.schedule-table .btn-group .btn {
+    transition: all 0.3s ease;
+}
+
+.schedule-table .btn-group .btn:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .schedule-section {
+        padding: 1rem;
+    }
+    
+    .schedule-table {
+        font-size: 0.9rem;
+    }
+    
+    .schedule-table thead th,
+    .schedule-table tbody td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .schedule-table thead th {
+        font-size: 0.8rem;
+    }
+    
+    .subject-icon {
+        width: 35px;
+        height: 35px;
     }
 }

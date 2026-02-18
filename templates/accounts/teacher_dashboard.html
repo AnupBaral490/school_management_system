@@ -684,58 +684,110 @@
             </div>
         </div>
         
-        <!-- Subject Assignments (Teaching Schedule) -->
-        <div class="card shadow mt-4">
-            <div class="card-header bg-info text-white">
-                <h6 class="m-0"><i class="fas fa-chalkboard-teacher"></i> My Teaching Schedule</h6>
-            </div>
-            <div class="card-body">
-                {% if teacher_assignments %}
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Subject</th>
-                                <th>Class</th>
-                                <th>Students Enrolled</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for assignment in teacher_assignments %}
-                            <tr>
-                                <td>
-                                    <strong>{{ assignment.subject.name }}</strong><br>
-                                    <small class="text-muted">{{ assignment.subject.code }}</small>
-                                </td>
-                                <td>{{ assignment.class_assigned.name }}</td>
-                                <td>
-                                    {% with assignment.class_assigned.studentenrollment_set.count as student_count %}
-                                        <span class="badge bg-primary">{{ student_count }} student{{ student_count|pluralize }}</span>
-                                    {% endwith %}
-                                </td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <a href="{% url 'attendance:mark_attendance' %}" class="btn btn-sm btn-outline-primary" title="Mark Attendance">
-                                            <i class="fas fa-check-circle"></i>
-                                        </a>
-                                        <a href="{% url 'academic:create_assignment' %}" class="btn btn-sm btn-outline-success" title="Create Assignment">
-                                            <i class="fas fa-plus"></i>
-                                        </a>
-                                        <a href="{% url 'academic:teacher_class_students' assignment.class_assigned.id %}" class="btn btn-sm btn-outline-info" title="View Students">
-                                            <i class="fas fa-users"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        <!-- Subject Assignments (Teaching Schedule) - Grouped by Class -->
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-header bg-gradient-info text-white border-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-0 fw-bold"><i class="fas fa-calendar-alt me-2"></i>My Teaching Schedule</h5>
+                    <span class="badge bg-white text-info">{{ teacher_assignments.count }} Subject{{ teacher_assignments.count|pluralize }}</span>
                 </div>
+            </div>
+            <div class="card-body p-4">
+                {% if teacher_assignments %}
+                    {% regroup teacher_assignments by class_assigned.name as schedule_grouped %}
+                    
+                    {% for class_group in schedule_grouped %}
+                    <!-- Class Schedule Section -->
+                    <div class="schedule-section mb-4">
+                        <div class="schedule-header">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div>
+                                    <h5 class="mb-1 text-info fw-bold">
+                                        <i class="fas fa-school me-2"></i>{{ class_group.grouper }}
+                                    </h5>
+                                    <p class="text-muted mb-0 small">
+                                        <i class="fas fa-book me-1"></i>{{ class_group.list|length }} Subject{{ class_group.list|length|pluralize }}
+                                        <span class="mx-2">•</span>
+                                        <i class="fas fa-users me-1"></i>
+                                        {% with first_class=class_group.list.0.class_assigned %}
+                                            {{ first_class.studentenrollment_set.count|default:0 }} Student{{ first_class.studentenrollment_set.count|pluralize }}
+                                        {% endwith %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Subjects Table for this Class -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th width="35%">Subject</th>
+                                        <th width="20%">Section</th>
+                                        <th width="20%">Students</th>
+                                        <th width="25%">Quick Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for assignment in class_group.list %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="subject-icon me-2">
+                                                    <i class="fas fa-book-open"></i>
+                                                </div>
+                                                <div>
+                                                    <strong class="d-block">{{ assignment.subject.name }}</strong>
+                                                    <small class="text-muted">{{ assignment.subject.code }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-warning text-dark px-3 py-2 fw-bold">
+                                                Section {{ assignment.class_assigned.section }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary px-3 py-2">
+                                                <i class="fas fa-users me-1"></i>
+                                                {{ assignment.class_assigned.studentenrollment_set.count|default:0 }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="{% url 'attendance:mark_attendance' %}?class={{ assignment.class_assigned.id }}&subject={{ assignment.subject.id }}" 
+                                                   class="btn btn-sm btn-outline-success" 
+                                                   title="Mark Attendance">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </a>
+                                                <a href="{% url 'academic:create_assignment' %}?class={{ assignment.class_assigned.id }}&subject={{ assignment.subject.id }}" 
+                                                   class="btn btn-sm btn-outline-primary" 
+                                                   title="Create Assignment">
+                                                    <i class="fas fa-plus"></i>
+                                                </a>
+                                                <a href="{% url 'academic:teacher_class_students' assignment.class_assigned.id %}" 
+                                                   class="btn btn-sm btn-outline-info" 
+                                                   title="View Students">
+                                                    <i class="fas fa-users"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    {% if not forloop.last %}
+                    <hr class="my-4">
+                    {% endif %}
+                    {% endfor %}
+                    
                 {% else %}
-                <div class="text-center py-4">
-                    <i class="fas fa-chalkboard-teacher fa-3x text-muted mb-3"></i>
-                    <h6 class="text-muted">No Subject Assignments</h6>
+                <div class="text-center py-5">
+                    <i class="fas fa-chalkboard-teacher fa-4x text-muted mb-3 opacity-50"></i>
+                    <h6 class="text-muted mb-2">No Subject Assignments</h6>
                     <p class="text-muted">Contact admin to get assigned to subjects and classes</p>
                 </div>
                 {% endif %}

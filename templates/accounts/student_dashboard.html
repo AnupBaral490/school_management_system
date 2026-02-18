@@ -6,28 +6,42 @@
 <!-- Dashboard Header -->
 <div class="row mb-4">
     <div class="col-12">
-        <div class="dashboard-header-student-modern">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <div class="header-content">
-                    <h2 class="dashboard-title-student-modern mb-2">
-                        <i class="fas fa-user-graduate me-3"></i>
-                        Student Dashboard
-                    </h2>
-                    <p class="welcome-text-modern mb-0">
-                        Welcome back, 
-                        <span class="student-name-highlight">
-                            {{ user.get_full_name|default:user.username }}
-                        </span>!
-                    </p>
-                </div>
-                <div class="header-actions mt-3 mt-md-0">
-                    <div class="btn-group" role="group">
-                        <a href="{% url 'accounts:profile' %}" class="btn btn-light btn-sm shadow-sm">
-                            <i class="fas fa-user me-1"></i>Profile
-                        </a>
-                        <a href="{% url 'notifications:notification_list' %}" class="btn btn-light btn-sm shadow-sm">
-                            <i class="fas fa-bell me-1"></i>Notifications
-                        </a>
+        <div class="dashboard-header-student-premium">
+            <div class="header-background-pattern"></div>
+            <div class="header-content-wrapper">
+                <div class="row align-items-center">
+                    <div class="col-lg-8 col-md-7">
+                        <div class="header-text-content">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="icon-wrapper-premium">
+                                    <i class="fas fa-user-graduate"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h1 class="dashboard-title-premium mb-1">
+                                        Student Dashboard
+                                    </h1>
+                                    <div class="title-underline"></div>
+                                </div>
+                            </div>
+                            <div class="welcome-section-premium">
+                                <p class="welcome-label mb-1">Welcome back,</p>
+                                <h3 class="student-name-premium">
+                                    <span class="name-text">{{ user.get_full_name|default:user.username }}</span>
+                                    <i class="fas fa-hand-sparkles ms-2 wave-animation"></i>
+                                </h3>
+                                <p class="welcome-subtitle">Ready to continue your learning journey?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-5 text-md-end mt-4 mt-md-0">
+                        <div class="header-actions-premium">
+                            <a href="{% url 'accounts:profile' %}" class="btn-icon-premium" title="My Profile">
+                                <i class="fas fa-user-circle"></i>
+                            </a>
+                            <a href="{% url 'notifications:notification_list' %}" class="btn-icon-premium" title="Notifications">
+                                <i class="fas fa-bell"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
